@@ -1,5 +1,7 @@
 package Member;
 
+import java.util.ArrayList;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -51,12 +53,13 @@ public class Main {
 //		} else {
 //			System.out.println("등록된 회원이 아닙니다.");
 //		}
+		
 		// 3. 데이터 모두 가져오기
-		MemberDTO nowUser = myDao.selAll();
+		ArrayList<MemberDTO> userList = myDao.selAll();
 		myDao.attPrt();
-	for(MemberDTO nowM: myDao.getMemberList()) {
-		nowM.prt(nowM);
-	}
+		for(MemberDTO user: userList) {
+			user.prt(user);
+		}
 		
 		
 		

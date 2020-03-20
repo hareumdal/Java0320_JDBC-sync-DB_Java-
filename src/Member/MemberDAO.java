@@ -15,7 +15,7 @@ public class MemberDAO { // data access object
 
 	private String sql = "";
 
-	private ArrayList<MemberDTO> memberDTOList = new ArrayList<>();
+	
 	
 	MemberDAO() {
 		try {
@@ -26,9 +26,7 @@ public class MemberDAO { // data access object
 		}
 	}
 
-	public ArrayList<MemberDTO> getMemberList(){
-		return memberDTOList;
-	}
+
 	
 	
 	
@@ -127,7 +125,6 @@ public class MemberDAO { // data access object
 					searchDTO.setPoint(rs.getFloat("point"));
 					return searchDTO;
 				}
-
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,30 +135,31 @@ public class MemberDAO { // data access object
 		return searchDTO;
 	}
 	
-	public MemberDTO selAll() {
+	public ArrayList<MemberDTO> selAll() {
+		ArrayList<MemberDTO> uList = new ArrayList<>();
 		MemberDTO searchDTO = null;
 		if (connect()) {
 			try {
-			//	attPrt();
 				stmt = conn.createStatement();
 				sql = "select * from mmember";
-				rs = stmt.executeQuery(sql);
-				while (rs.next()) {
+				rs = stmt.executeQuery(sql); // 객체를 받아와서
+				while (rs.next()) { // 가져올 다음 튜플이 있다면 //StringTokenizer의 hasmoretoken().. 이런 거 // 가져올 데이터가 많으면 while
 					searchDTO = new MemberDTO();
 					searchDTO.setNo(rs.getInt("no"));
 					searchDTO.setId(rs.getString("id"));
 					searchDTO.setName(rs.getString("name")); // 필드명을 써줌
 					searchDTO.setPoint(rs.getFloat("point"));
-					memberDTOList.add(searchDTO);
-				
-					//searchDTO.prt(searchDTO);
+					uList.add(searchDTO);
 				}
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else {
+			System.out.println("DB 접속 오류!! ");
 		}
-		return searchDTO;
+		return uList;
 	}
 	public void attPrt() {
 		System.out.println("==============================");
